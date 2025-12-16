@@ -1,68 +1,147 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  --primary-color: #4F46E5;
+  --secondary-color: #6B7280;
+  --text-color: #1F2937;
+  --bg-color-light: #F9FAFB;
 }
 
 body {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color-light);
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+
+.task-item {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #E5E7EB;
+  transition: all 0.2s;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.task-completed .task-text {
+  text-decoration: line-through;
+  color: var(--secondary-color);
+}
+
+
+.task-completed .btn-outline-danger {
+  visibility: hidden;
+}
+
+
+/* --- ESTILOS GOOGLE CALENDAR (Agenda) --- */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px; /* Espacio para las líneas del borde */
+  background-color: #E5E7EB; /* Color de las líneas de separación */
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.day-name {
+  background-color: #F9FAFB;
+  padding: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6B7280;
+  text-align: center;
+}
+
+.calendar-day {
+  min-height: 120px; /* Altura fija para que parezca agenda */
+  background-color: white;
+  padding: 8px;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  position: relative;
+  transition: background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.calendar-day:hover {
+  background-color: #F8FAFC;
 }
+
+/* Botón "+" que aparece al hacer hover */
+.calendar-day .add-btn {
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: #EEF2FF;
+  color: #4F46E5;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.calendar-day:hover .add-btn {
+  opacity: 1;
+}
+
+/* Número del día */
+.day-number {
+  align-self: flex-end; /* Mover a la derecha */
+  font-weight: 500;
+  color: #374151;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.85rem;
+}
+
+.calendar-day.today .day-number {
+  background-color: #4F46E5;
+  color: white;
+}
+
+.calendar-day.selected {
+  background-color: #EEF2FF;
+}
+
+.text-muted {
+  background-color: #F9FAFB;
+  color: #D1D5DB !important;
+}
+
+/* --- LAS PÍLDORAS DE TAREAS (EVENTS) --- */
+.task-pill {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: transform 0.1s;
+}
+
+.task-pill:hover {
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+/* Colores aleatorios para las tareas (se asignan dinámicamente o por clases) */
+.pill-blue { background-color: #DBEAFE; color: #1E40AF; border-left: 3px solid #1E40AF; }
+.pill-green { background-color: #D1FAE5; color: #065F46; border-left: 3px solid #065F46; }
+.pill-purple { background-color: #E0E7FF; color: #3730A3; border-left: 3px solid #3730A3; }
+.pill-yellow { background-color: #FEF3C7; color: #92400E; border-left: 3px solid #92400E; }
+.pill-completed { text-decoration: line-through; opacity: 0.6; background-color: #F3F4F6; color: #6B7280; border-left: 3px solid #9CA3AF; }
